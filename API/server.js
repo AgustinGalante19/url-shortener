@@ -7,6 +7,7 @@ const fastify = Fastify({
 })
 
 fastify.get("/", () => {
+  console.log(fastify.listeningOrigin)
   return "Welcome to url shortener by Agustin Galante"
 })
 
