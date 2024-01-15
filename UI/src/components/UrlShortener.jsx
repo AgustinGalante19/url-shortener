@@ -1,14 +1,26 @@
 import { useState } from "react"
 import CloseIcon from "./icons/CloseIcon.jsx"
 import CopyIcon from "./icons/CopyIcon.jsx"
+import CheckIcon from "./icons/CheckIcon.jsx"
+import "../styles/globals.css"
 
 function UrlShortener() {
   const [isLoading, setIsLoading] = useState(false)
   const [urlResult, setUrlResult] = useState(null)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
+  const [isCheckHidden, setIsCheckHidden] = useState(true)
+
+  const handleCopy = (e) => {
+    e.preventDefault()
+    setIsCheckHidden(false)
+    window.navigator.clipboard.writeText(urlResult)
+    setTimeout(() => {
+      setIsCheckHidden(true)
+    }, 1500)
+  }
 
   return (
-    <div>
+    <div id='url-form'>
       <form
         className='flex justify-center mt-8'
         onSubmit={(e) => {
@@ -36,7 +48,7 @@ function UrlShortener() {
             .finally(() => setIsLoading(false))
         }}
       >
-        <div className='relative bg-red-400 w-full'>
+        <div className='relative w-full'>
           <input
             className='px-4 py-2 text-xl rounded-y-md rounded-l-md bg-midnight border-y-2 border-l-2 border-gray-300 w-full focus:border-slate-200 focus:bg-midnightLight transition-colors'
             placeholder='https://url-shortener.com'
@@ -57,7 +69,7 @@ function UrlShortener() {
         </button>
       </form>
       {urlResult && (
-        <div className='mt-12'>
+        <div className='mt-12' id="url-form">
           {isAlertOpen && (
             <div className='space-y-4 relative mb-4'>
               <button
@@ -77,8 +89,13 @@ function UrlShortener() {
           )}
           <div className='p-4 flex items-center justify-between rounded-md bg-midnightLight border-2 border-gray-300'>
             <span>{urlResult}</span>
-            <button>
-              <CopyIcon />
+            <button
+              onClick={handleCopy}
+              type='button'
+              title='Copy Link'
+              className='text-green-600'
+            >
+              {isCheckHidden ? <CopyIcon /> : <CheckIcon />}
             </button>
           </div>
         </div>
