@@ -7,7 +7,7 @@ import LoaderIcon from "./icons/LoaderIcon.jsx"
 
 function UrlShortener() {
   const [isLoading, setIsLoading] = useState(false)
-  const [urlResult, setUrlResult] = useState("http://localhost:3000/HHoxBZAC0M")
+  const [urlResult, setUrlResult] = useState(null)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [isCheckHidden, setIsCheckHidden] = useState(true)
 
