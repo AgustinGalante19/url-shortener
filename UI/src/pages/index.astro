@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets"
+import Layout from "../layouts/Layout.astro"
+import UrlIcon from "../assets/icons/url.svg"
+---
+
+<Layout title='Welcome to Astro.'>
+  <main class='container w-[800px] mx-auto p-8 mt-16'>
+    <div class='flex items-center flex-col gap-3'>
+      <h1 class='text-center text-6xl font-bold'>
+        Put your url and get an shorted one!
+      </h1>
+      <span class='font-semibold text-xl text-slate-300'
+        >Ulimited links without loggin in</span
+      >
+    </div>
+    <div class='flex justify-center mt-8'>
+      <div class='relative'>
+        <input
+          class='px-4 py-2 text-xl rounded-y-md rounded-l-md bg-transparent border-y-2 border-l-2 border-gray-300 w-96'
+          placeholder='https://url-shortener.com'
+        />
+        <div
+          class='absolute text-red-400 inset-y-0 right-0 flex items-center pr-4'
+        >
+          <Image src={UrlIcon} alt='url' width={22} height={22} />
+        </div>
+      </div>
+      <button
+        class='border-2 rounded-r-md px-2 border-gray-300 bg-neutral-200 text-midnightLight font-semibold hover:bg-transparent hover:text-light transition-colors duration-200'
+        >Short</button
+      >
+    </div>
+  </main>
+</Layout>
