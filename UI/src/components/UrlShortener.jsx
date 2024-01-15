@@ -36,9 +36,9 @@ function UrlShortener() {
             .finally(() => setIsLoading(false))
         }}
       >
-        <div className='relative'>
+        <div className='relative bg-red-400 w-full'>
           <input
-            className='px-4 py-2 text-xl rounded-y-md rounded-l-md bg-midnight border-y-2 border-l-2 border-gray-300 w-96 focus:border-slate-200 focus:bg-midnightLight transition-colors'
+            className='px-4 py-2 text-xl rounded-y-md rounded-l-md bg-midnight border-y-2 border-l-2 border-gray-300 w-full focus:border-slate-200 focus:bg-midnightLight transition-colors'
             placeholder='https://url-shortener.com'
             type='url'
             name='url'
