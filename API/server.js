@@ -5,14 +5,13 @@ import { fastifyCors } from "@fastify/cors"
 
 const port = process.env.PORT || 3000
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`
-const renderAppUrl =
-  "https://65a5c0a4a79a924e26a84868--meek-dusk-1e55a9.netlify.app"
+const netlifyApp = ["https://meek-dusk-1e55a9.netlify.app"]
 const fastify = Fastify({
   logger: false,
 })
 
 fastify.register(fastifyCors, {
-  origin: ["http://localhost:4321", renderAppUrl],
+  origin: ["http://localhost:4321"].concat(netlifyApp),
   methods: ["POST"],
 })
 fastify.get("/", () => {
@@ -29,7 +28,7 @@ fastify.post("/shortUrl", async (req) => {
     },
   })
 
-  return { result: `${renderAppUrl}/${shortUrl}` }
+  return { result: `https://url-shortener-api-8x2k.onrender.com/${shortUrl}` }
 })
 
 fastify.get("/:shortUrl", async (req, reply) => {
