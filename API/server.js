@@ -2,6 +2,10 @@ import Fastify from "fastify"
 import client from "./src/client/prisma.js"
 import ShortUniqueId from "short-unique-id"
 import { fastifyCors } from "@fastify/cors"
+
+const port = process.env.PORT || 3000
+const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`
+
 const fastify = Fastify({
   logger: false,
 })
@@ -26,7 +30,6 @@ fastify.post("/shortUrl", async (req) => {
   })
 
   return { result: `http://localhost:3000/${shortUrl}` }
-  return "ok"
 })
 
 fastify.get("/:shortUrl", async (req, reply) => {
@@ -45,15 +48,9 @@ fastify.get("/:shortUrl", async (req, reply) => {
   }
 })
 
-const start = async () => {
-  try {
-    await fastify.listen({
-      port: process.env.PORT || 3000,
-      host: process.env.HOST || "127.0.0.1",
-    })
-  } catch (err) {
+fastify.listen({ host, port }, function (err, _address) {
+  if (err) {
     fastify.log.error(err)
     process.exit(1)
   }
-}
-start()
+})
