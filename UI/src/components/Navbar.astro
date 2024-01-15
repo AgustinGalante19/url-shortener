@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets"
+import UrlIcon from "../assets/icons/url.svg"
+import GithubIcon from "../components/icons/Github.astro"
+---
+
+<header class='p-4'>
+  <nav class='container mx-auto'>
+    <ul class='flex gap-2 justify-between'>
+      <div>
+        <li class='font-semibold'>
+          <a
+            href='/'
+            class='flex items-center gap-2 hover:text-slate-400 transition-colors'
+          >
+            <Image src={UrlIcon} alt='url' width={20} height={20} />
+            Url Shortener</a
+          >
+        </li>
+      </div>
+      <div class='flex gap-4'>
+        <li>
+          <a href='https://github.com/AgustinGalante19/url-shortener/'>
+            <div class='w-5 h-5 hover:text-slate-400 transition-colors'>
+              <GithubIcon />
+            </div></a
+          >
+        </li>
+      </div>
+    </ul>
+  </nav>
+</header>
