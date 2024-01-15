@@ -4,11 +4,14 @@ import Layout from "../layouts/Layout.astro"
 import "../styles/globals.css"
 ---
 
-<Layout title='Welcome to Astro.'>
+<Layout title='URL Shortener'>
   <main class='container w-[800px] mx-auto p-8 mt-16'>
     <div class='flex items-center flex-col gap-3'>
       <h1 class='text-center text-6xl font-bold' id='title'>
-        Put your url and get an shortened one!
+        Put your url and get an <span
+          class='bg-gradient-to-tr from-indigo-400 via-indigo-600 to-indigo-800 text-transparent bg-clip-text'
+          >shortened</span
+        > one!
       </h1>
       <span class='font-semibold text-xl text-slate-300' id='subtitle'
         >Ulimited links without loggin in</span

@@ -3,10 +3,11 @@ import CloseIcon from "./icons/CloseIcon.jsx"
 import CopyIcon from "./icons/CopyIcon.jsx"
 import CheckIcon from "./icons/CheckIcon.jsx"
 import "../styles/globals.css"
+import LoaderIcon from "./icons/LoaderIcon.jsx"
 
 function UrlShortener() {
   const [isLoading, setIsLoading] = useState(false)
-  const [urlResult, setUrlResult] = useState(null)
+  const [urlResult, setUrlResult] = useState("http://localhost:3000/HHoxBZAC0M")
   const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [isCheckHidden, setIsCheckHidden] = useState(true)
 
@@ -65,11 +66,17 @@ function UrlShortener() {
           id='submit-button'
           disabled={isLoading}
         >
-          Shorten
+          {isLoading ? (
+            <div className='animate-spin'>
+              <LoaderIcon />
+            </div>
+          ) : (
+            "Shorten"
+          )}
         </button>
       </form>
       {urlResult && (
-        <div className='mt-12' id="url-form">
+        <div className='mt-12' id='url-form'>
           {isAlertOpen && (
             <div className='space-y-4 relative mb-4'>
               <button
@@ -87,16 +94,19 @@ function UrlShortener() {
               </div>
             </div>
           )}
-          <div className='p-4 flex items-center justify-between rounded-md bg-midnightLight border-2 border-gray-300'>
-            <span>{urlResult}</span>
-            <button
-              onClick={handleCopy}
-              type='button'
-              title='Copy Link'
-              className='text-green-600'
-            >
-              {isCheckHidden ? <CopyIcon /> : <CheckIcon />}
-            </button>
+          <div className='relative'>
+            <div className='p-4 flex items-center justify-between rounded-md bg-midnightLight border-gray-300 z-10'>
+              <span>{urlResult}</span>
+              <button
+                onClick={handleCopy}
+                type='button'
+                title='Copy Link'
+                className='text-green-600'
+              >
+                {isCheckHidden ? <CopyIcon /> : <CheckIcon />}
+              </button>
+            </div>
+            <div className='absolute w-full z-[-1] rounded-md bg-neutral-700 blur top-0 h-14' />
           </div>
         </div>
       )}
