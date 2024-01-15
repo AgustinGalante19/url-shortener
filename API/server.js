@@ -1,11 +1,15 @@
 import Fastify from "fastify"
 import client from "./src/client/prisma.js"
 import ShortUniqueId from "short-unique-id"
-
+import { fastifyCors } from "@fastify/cors"
 const fastify = Fastify({
-  logger: true,
+  logger: false,
 })
 
+fastify.register(fastifyCors, {
+  origin: ["http://localhost:4321"],
+  methods: ["POST"],
+})
 fastify.get("/", () => {
   console.log(fastify.listeningOrigin)
   return "Welcome to url shortener by Agustin Galante"
@@ -21,7 +25,8 @@ fastify.post("/shortUrl", async (req) => {
     },
   })
 
-  return { method: "post", result: shortUrl }
+  return { result: `http://localhost:3000/${shortUrl}` }
+  return "ok"
 })
 
 fastify.get("/:shortUrl", async (req, reply) => {
