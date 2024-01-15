@@ -1,15 +1,16 @@
 ---
 import UrlShortener from "../components/UrlShortener"
 import Layout from "../layouts/Layout.astro"
+import "../styles/globals.css"
 ---
 
 <Layout title='Welcome to Astro.'>
   <main class='container w-[800px] mx-auto p-8 mt-16'>
     <div class='flex items-center flex-col gap-3'>
-      <h1 class='text-center text-6xl font-bold'>
+      <h1 class='text-center text-6xl font-bold' id='title'>
         Put your url and get an shortened one!
       </h1>
-      <span class='font-semibold text-xl text-slate-300'
+      <span class='font-semibold text-xl text-slate-300' id='subtitle'
         >Ulimited links without loggin in</span
       >
     </div>
