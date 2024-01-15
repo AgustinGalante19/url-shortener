@@ -5,17 +5,17 @@ import { fastifyCors } from "@fastify/cors"
 
 const port = process.env.PORT || 3000
 const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`
-
+const renderAppUrl =
+  "https://65a5c0a4a79a924e26a84868--meek-dusk-1e55a9.netlify.app"
 const fastify = Fastify({
   logger: false,
 })
 
 fastify.register(fastifyCors, {
-  origin: ["http://localhost:4321"],
+  origin: ["http://localhost:4321", renderAppUrl],
   methods: ["POST"],
 })
 fastify.get("/", () => {
-  console.log(fastify.listeningOrigin)
   return "Welcome to url shortener by Agustin Galante"
 })
 
@@ -29,7 +29,7 @@ fastify.post("/shortUrl", async (req) => {
     },
   })
 
-  return { result: `http://localhost:3000/${shortUrl}` }
+  return { result: `${renderAppUrl}/${shortUrl}` }
 })
 
 fastify.get("/:shortUrl", async (req, reply) => {
