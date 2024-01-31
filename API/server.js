@@ -1,7 +1,7 @@
 import Fastify from "fastify"
-import client from "./src/client/prisma.js"
 import ShortUniqueId from "short-unique-id"
 import { fastifyCors } from "@fastify/cors"
+import client from "./lib/prisma.js"
 
 const netlifyApp = ["https://meek-dusk-1e55a9.netlify.app"]
 const fastify = Fastify({
