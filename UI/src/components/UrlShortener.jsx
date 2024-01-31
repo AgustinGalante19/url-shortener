@@ -96,7 +96,13 @@ function UrlShortener() {
           )}
           <div className='relative'>
             <div className='p-4 flex items-center justify-between rounded-md bg-midnightLight border-gray-300 z-10'>
-              <span>{urlResult}</span>
+              <a
+                href={urlResult}
+                target='_blank'
+                className='underline text-indigo-600'
+              >
+                {urlResult}
+              </a>
               <button
                 onClick={handleCopy}
                 type='button'
