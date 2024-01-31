@@ -3,8 +3,6 @@ import client from "./src/client/prisma.js"
 import ShortUniqueId from "short-unique-id"
 import { fastifyCors } from "@fastify/cors"
 
-const port = process.env.PORT || 3000
-const host = "RENDER" in process.env ? `0.0.0.0` : `localhost`
 const netlifyApp = ["https://meek-dusk-1e55a9.netlify.app"]
 const fastify = Fastify({
   logger: false,
@@ -14,6 +12,7 @@ fastify.register(fastifyCors, {
   origin: ["http://localhost:4321"].concat(netlifyApp),
   methods: ["POST"],
 })
+
 fastify.get("/", () => {
   return "Welcome to url shortener by Agustin Galante"
 })
@@ -47,9 +46,7 @@ fastify.get("/:shortUrl", async (req, reply) => {
   }
 })
 
-fastify.listen({ host, port }, function (err, _address) {
-  if (err) {
-    fastify.log.error(err)
-    process.exit(1)
-  }
-})
+export default async function handler(req, reply) {
+  await fastify.ready()
+  fastify.server.emit("request", req, reply)
+}
