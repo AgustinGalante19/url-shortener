@@ -1,0 +1,22 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "build": "pnpm i && npx prisma generate",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "8.5.0",
+    "@prisma/client": "5.8.0",
+    "fastify": "4.25.2",
+    "prisma": "5.8.0",
+    "short-unique-id": "5.0.3"
+  }
+}
