@@ -87,7 +87,7 @@ function UrlShortener() {
                 <CloseIcon />
               </button>
               <div
-                class='p-4 mb-4 text-green-800 rounded bg-green-50 dark:bg-neutral-800 dark:text-green-500 font-medium'
+                className='p-4 mb-4 text-green-800 rounded bg-green-50 dark:bg-neutral-800 dark:text-green-500 font-medium'
                 role='alert'
               >
                 <span>✅Url generated successfully </span>
