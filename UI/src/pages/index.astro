@@ -5,7 +5,7 @@ import "../styles/globals.css"
 ---
 
 <Layout title='URL Shortener'>
-  <main class='container w-[800px] mx-auto p-8 mt-16'>
+  <main class='container w-[800px] max-md:w-full mx-auto p-8 mt-16'>
     <div class='flex items-center flex-col gap-3'>
       <h1 class='text-center text-6xl font-bold' id='title'>
         Put your url and get an <span
@@ -13,8 +13,9 @@ import "../styles/globals.css"
           >shortened</span
         > one!
       </h1>
-      <span class='font-semibold text-xl text-slate-300' id='subtitle'
-        >Ulimited links without loggin in</span
+      <span
+        class='font-semibold text-xl text-slate-300 text-center'
+        id='subtitle'>Ulimited links without loggin in</span
       >
     </div>
     <UrlShortener client:only />
