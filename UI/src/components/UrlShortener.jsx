@@ -1,5 +1,4 @@
 import { useState } from "react"
-import CloseIcon from "./icons/CloseIcon.jsx"
 import CopyIcon from "./icons/CopyIcon.jsx"
 import CheckIcon from "./icons/CheckIcon.jsx"
 import "../styles/globals.css"
@@ -27,6 +26,7 @@ function UrlShortener() {
         onSubmit={(e) => {
           e.preventDefault()
           setIsLoading(true)
+          setIsAlertOpen(false)
           const fields = new FormData(e.target)
           const url = fields.get("url")
           const API_URL = import.meta.env.PUBLIC_API_URL
@@ -78,19 +78,12 @@ function UrlShortener() {
       {urlResult && (
         <div className='mt-12' id='url-form'>
           {isAlertOpen && (
-            <div className='space-y-4 relative mb-4'>
-              <button
-                className='absolute right-0 mr-2 mt-2'
-                type='button'
-                onClick={() => setIsAlertOpen(false)}
-              >
-                <CloseIcon />
-              </button>
+            <div className='space-y-4 relative mb-4 w-fit mx-auto'>
               <div
-                className='p-4 mb-4 text-green-800 rounded bg-green-50 dark:bg-neutral-800 dark:text-green-500 font-medium'
+                className='p-4 mb-4 text-[#53f948] rounded bg-[#163e1b] font-medium'
                 role='alert'
               >
-                <span>✅Url generated successfully </span>
+                <span>Url generated successfully </span>
               </div>
             </div>
           )}
@@ -112,7 +105,7 @@ function UrlShortener() {
                 {isCheckHidden ? <CopyIcon /> : <CheckIcon />}
               </button>
             </div>
-            <div className='absolute w-full z-[-1] rounded-md bg-neutral-700 blur top-0 h-14' />
+            <div className='absolute w-full z-[-1] rounded-md bg-neutral-700 blur-sm top-0 h-14' />
           </div>
         </div>
       )}
