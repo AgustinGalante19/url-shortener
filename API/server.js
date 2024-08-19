@@ -35,10 +35,10 @@ fastify.post('/shortUrl', async (req, res) => {
       fullUrl,
     },
   });
-
   if (exists) {
     return res.code(400).send({
-      result: `This url has already shortened: https://short-it-ag19.vercel.app/${exists.shortUrl}`,
+      message: `This url has already shortened`,
+      result: `https://short-it-ag19.vercel.app/${exists.shortUrl}`,
     });
   }
   const shortUrl = new ShortUniqueId({ length: 10 }).rnd();
@@ -49,7 +49,10 @@ fastify.post('/shortUrl', async (req, res) => {
     },
   });
 
-  return res.send({ result: `https://short-it-ag19.vercel.app/${shortUrl}` });
+  return res.send({
+    message: `Url generated successfully`,
+    result: `https://short-it-ag19.vercel.app/${shortUrl}`,
+  });
 });
 
 fastify.get('/:shortUrl', async (req, reply) => {
