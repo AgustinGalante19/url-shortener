@@ -8,7 +8,11 @@ import LinkIcon from './icons/Link.jsx';
 function UrlShortener() {
   const [isLoading, setIsLoading] = useState(false);
   const [urlResult, setUrlResult] = useState(null);
-  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState({
+    isOpen: false,
+    message: '',
+    variant: 'success',
+  });
   const [isCheckHidden, setIsCheckHidden] = useState(true);
 
   const handleCopy = (e) => {
@@ -20,36 +24,48 @@ function UrlShortener() {
     }, 1500);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      setIsAlertOpen({ ...isAlertOpen, isOpen: false });
+      setUrlResult(null);
+      const fields = new FormData(e.target);
+      const url = fields.get('url');
+      const API_URL = import.meta.env.PUBLIC_API_URL;
+      const request = await fetch(`${API_URL}/shortUrl`, {
+        method: 'POST',
+        body: JSON.stringify({
+          fullUrl: url,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const responseJson = await request.json();
+      const response = responseJson;
+      setUrlResult(response.result);
+      setIsAlertOpen({
+        isOpen: true,
+        message: response.message,
+        variant: request.status === 400 ? 'warning' : 'success',
+      });
+    } catch (err) {
+      setUrlResult(null);
+      setIsAlertOpen({
+        isOpen: true,
+        variant: 'warning',
+        message: 'Something went wrong :(',
+      });
+      console.log('ERROR', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div id='url-form'>
-      <form
-        className='flex justify-center mt-8'
-        onSubmit={(e) => {
-          e.preventDefault();
-          setIsLoading(true);
-          setIsAlertOpen(false);
-          const fields = new FormData(e.target);
-          const url = fields.get('url');
-          const API_URL = import.meta.env.PUBLIC_API_URL;
-          fetch(`${API_URL}/shortUrl`, {
-            method: 'POST',
-            body: JSON.stringify({
-              fullUrl: url,
-            }),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-            .then((response) => response.json())
-            .then((responseJson) => {
-              const { result } = responseJson;
-              setUrlResult(result);
-              setIsAlertOpen(true);
-            })
-            .catch((err) => console.log(err))
-            .finally(() => setIsLoading(false));
-        }}
-      >
+      <form className='flex justify-center mt-8' onSubmit={handleSubmit}>
         <div className='relative w-full'>
           <input
             className='px-4 py-2 text-xl rounded-y-md rounded-l-md bg-midnight border-y-2 border-l-2 border-gray-300 w-full focus:border-slate-200 focus:bg-midnightLight transition-colors'
@@ -85,18 +101,22 @@ function UrlShortener() {
           )}
         </button>
       </form>
+      {isAlertOpen.isOpen && (
+        <div className='space-y-4 relative mt-12 mb-4 w-fit mx-auto'>
+          <div
+            className={`p-4 mb-4 rounded ${
+              isAlertOpen.variant === 'success'
+                ? 'text-[#53f948] bg-[#163e1b]'
+                : 'text-[#f9c648] bg-[#3e3716]'
+            } font-medium`}
+            role='alert'
+          >
+            <span>{isAlertOpen.message} </span>
+          </div>
+        </div>
+      )}
       {urlResult && (
-        <div className='mt-12' id='url-form'>
-          {isAlertOpen && (
-            <div className='space-y-4 relative mb-4 w-fit mx-auto'>
-              <div
-                className='p-4 mb-4 text-[#53f948] rounded bg-[#163e1b] font-medium'
-                role='alert'
-              >
-                <span>Url generated successfully </span>
-              </div>
-            </div>
-          )}
+        <div id='url-form'>
           <div className='relative'>
             <div className='p-4 max-sm:p-2 flex items-center justify-between rounded-md bg-midnightLight border-gray-300 z-10'>
               <a
