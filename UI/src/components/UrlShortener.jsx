@@ -1,52 +1,53 @@
-import { useState } from "react"
-import CopyIcon from "./icons/CopyIcon.jsx"
-import CheckIcon from "./icons/CheckIcon.jsx"
-import "../styles/globals.css"
-import LoaderIcon from "./icons/LoaderIcon.jsx"
+import { useState } from 'react';
+import CopyIcon from './icons/CopyIcon.jsx';
+import CheckIcon from './icons/CheckIcon.jsx';
+import '../styles/globals.css';
+import LoaderIcon from './icons/LoaderIcon.jsx';
+import LinkIcon from './icons/Link.jsx';
 
 function UrlShortener() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [urlResult, setUrlResult] = useState(null)
-  const [isAlertOpen, setIsAlertOpen] = useState(false)
-  const [isCheckHidden, setIsCheckHidden] = useState(true)
+  const [isLoading, setIsLoading] = useState(false);
+  const [urlResult, setUrlResult] = useState(null);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [isCheckHidden, setIsCheckHidden] = useState(true);
 
   const handleCopy = (e) => {
-    e.preventDefault()
-    setIsCheckHidden(false)
-    window.navigator.clipboard.writeText(urlResult)
+    e.preventDefault();
+    setIsCheckHidden(false);
+    window.navigator.clipboard.writeText(urlResult);
     setTimeout(() => {
-      setIsCheckHidden(true)
-    }, 1500)
-  }
+      setIsCheckHidden(true);
+    }, 1500);
+  };
 
   return (
     <div id='url-form'>
       <form
         className='flex justify-center mt-8'
         onSubmit={(e) => {
-          e.preventDefault()
-          setIsLoading(true)
-          setIsAlertOpen(false)
-          const fields = new FormData(e.target)
-          const url = fields.get("url")
-          const API_URL = import.meta.env.PUBLIC_API_URL
+          e.preventDefault();
+          setIsLoading(true);
+          setIsAlertOpen(false);
+          const fields = new FormData(e.target);
+          const url = fields.get('url');
+          const API_URL = import.meta.env.PUBLIC_API_URL;
           fetch(`${API_URL}/shortUrl`, {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify({
               fullUrl: url,
             }),
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
           })
             .then((response) => response.json())
             .then((responseJson) => {
-              const { result } = responseJson
-              setUrlResult(result)
-              setIsAlertOpen(true)
+              const { result } = responseJson;
+              setUrlResult(result);
+              setIsAlertOpen(true);
             })
             .catch((err) => console.log(err))
-            .finally(() => setIsLoading(false))
+            .finally(() => setIsLoading(false));
         }}
       >
         <div className='relative w-full'>
@@ -57,12 +58,18 @@ function UrlShortener() {
             name='url'
             required
           />
-          <div className='absolute text-red-400 inset-y-0 right-0 flex items-center pr-4'>
-            <img src='/url.svg' alt='url' width={22} height={22} />
+          <div className='absolute text-red-400 inset-y-0 max-sm:hidden right-0 flex items-center pr-4'>
+            <img
+              src='/url.svg'
+              alt='url'
+              className='text-white'
+              width={22}
+              height={22}
+            />
           </div>
         </div>
         <button
-          className='border-2 rounded-r-md px-2 border-gray-300 bg-light text-midnightLight font-semibold hover:bg-transparent hover:text-light transition-colors duration-200 disabled:bg-neutral-800 disabled:text-white'
+          className='border-2 rounded-r-md px-2 border-gray-300 bg-light text-midnightLight font-semibold hover:bg-neutral-300 transition-colors duration-200 disabled:bg-neutral-800'
           id='submit-button'
           disabled={isLoading}
         >
@@ -71,7 +78,10 @@ function UrlShortener() {
               <LoaderIcon />
             </div>
           ) : (
-            "Shorten"
+            <div>
+              <span className='max-sm:hidden'>Shorten</span>
+              <LinkIcon className='hidden max-sm:block text-black' />
+            </div>
           )}
         </button>
       </form>
@@ -110,7 +120,7 @@ function UrlShortener() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default UrlShortener
+export default UrlShortener;
