@@ -74,7 +74,7 @@ function UrlShortener() {
           disabled={isLoading}
         >
           {isLoading ? (
-            <div className='animate-spin'>
+            <div className='animate-spin text-white'>
               <LoaderIcon />
             </div>
           ) : (
@@ -98,7 +98,7 @@ function UrlShortener() {
             </div>
           )}
           <div className='relative'>
-            <div className='p-4 flex items-center justify-between rounded-md bg-midnightLight border-gray-300 z-10'>
+            <div className='p-4 max-sm:p-2 flex items-center justify-between rounded-md bg-midnightLight border-gray-300 z-10'>
               <a
                 href={urlResult}
                 target='_blank'
@@ -110,7 +110,7 @@ function UrlShortener() {
                 onClick={handleCopy}
                 type='button'
                 title='Copy Link'
-                className='text-green-600'
+                className='text-green-600 max-sm:hidden'
               >
                 {isCheckHidden ? <CopyIcon /> : <CheckIcon />}
               </button>
